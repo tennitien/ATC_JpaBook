@@ -3,6 +3,7 @@ package jpabook.jpabook.entity.item;
 
 import jakarta.persistence.*;
 import jpabook.jpabook.entity.Category;
+import jpabook.jpabook.exception.NotEnoughException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +31,31 @@ public abstract class Item {
     private int stockQuantity;
 
     @ManyToMany(mappedBy = "items")
-    private List<Category> categories= new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
+
+
+    /*
+     * increase
+     * */
+    public void increaseStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    /*
+     * decrease
+     * */
+    public void decreaseStoch(int quantity) {
+        int restStock = this.stockQuantity - quantity;
+
+        if (restStock < 0) {
+            throw new NotEnoughException("We need more stock.");
+        }
+
+        this.stockQuantity = restStock;
+    }
+
+    /*
+     * increase
+     * */
+
 }
