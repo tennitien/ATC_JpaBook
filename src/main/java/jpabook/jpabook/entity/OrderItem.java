@@ -5,10 +5,13 @@ import jpabook.jpabook.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity @Getter @Setter
+@Entity
+@Getter
+@Setter
 public class OrderItem {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "order_item_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id")
     private Long id;
 
     // OrderItem-> Item
@@ -23,4 +26,31 @@ public class OrderItem {
 
     private int orderPrice;
     private int count;
+
+
+    //==Business Logic Methods==//
+    /*
+     * Cancel Order Item
+     */
+    public void cancel() {
+        item.increaseStock(count);
+    }
+
+    /*
+     * Retrieve Total Order Item Price
+     */
+    public int getTotalPrice() {
+        return orderPrice * count;
+    }
+
+    //== Methods
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+        item.decreaseStoch(count);
+        return orderItem;
+    }
+
 }

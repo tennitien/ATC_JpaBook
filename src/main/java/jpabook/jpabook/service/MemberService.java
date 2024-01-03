@@ -14,7 +14,9 @@ import java.util.List;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+
     // join
+    @Transactional
     public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);

@@ -22,5 +22,5 @@ public class Delivery {
 
     // DeliveryStatus: enum(ready, camp)
     @Enumerated(EnumType.STRING)
-    private DeliveryStatus deliveryStatus;
+    private DeliveryStatus status;
 }

@@ -37,7 +37,7 @@ public class Order {
 
     //    @Enumerated(EnumType.ORDINAL) // so lieu trong bang duoi dang ConSo -> Order =1 ,Cancel=0
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 
 
     //=== Association Assist method ===
@@ -48,8 +48,7 @@ public class Order {
     }
 
     // OrderItem Entity
-
-    public void setOrderItems(OrderItem orderItem) {
+    public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
@@ -59,5 +58,48 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    //==Business Logic Methods==//
+    /*
+     * Cancel Order
+     */
+    public void cancel() {
+        //validate delivery status
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("Order cannot be canceled once they are delivered.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+
+    }
+
+    /*
+     * Retrieve Total Order Price
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getOrderPrice();
+        }
+        return totalPrice;
+    }
+
+    //==Create Methods=//
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order=new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.ORDER);
+
+        for (OrderItem orderItem : orderItems  ) {
+            order.addOrderItem(orderItem);
+        }
+
+        return order;
     }
 }
