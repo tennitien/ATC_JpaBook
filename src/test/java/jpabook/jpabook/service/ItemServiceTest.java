@@ -16,9 +16,6 @@ class ItemServiceTest {
 
     @Test
     void saveItem() {
-        Item item=new Item();
-        item.setName("Kim");
-
 
     }
 
