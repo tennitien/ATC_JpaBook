@@ -14,11 +14,11 @@ import java.util.List;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     @Column (name = "member_id")
     private Long id;
 
-    @Column (name = "name")
     private String name;
 
     // @Embeddable(Address_class) // Value_type_table: bao gom gia tri tu cac bang khac

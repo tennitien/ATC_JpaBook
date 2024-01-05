@@ -8,9 +8,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "order_item")
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;
 
@@ -49,7 +51,7 @@ public class OrderItem {
         orderItem.setItem(item);
         orderItem.setOrderPrice(orderPrice);
         orderItem.setCount(count);
-        item.decreaseStoch(count);
+        item.decreaseStock(count);
         return orderItem;
     }
 

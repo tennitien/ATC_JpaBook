@@ -22,11 +22,21 @@ public class ItemService {
         itemRepository.save(item);
         return item.getId();
     }
+    /*
+     * update
+     */
+    @Transactional
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+        Item item = itemRepository.findOne(itemId);
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
+    }
 
     /*
      * retrieve all
      */
-    public List<Item> findItem() {
+    public List<Item> findItems() {
         return itemRepository.findAll();
     }
 

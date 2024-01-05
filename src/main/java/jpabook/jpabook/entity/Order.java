@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,8 @@ import java.util.List;
 @Table(name = "orders") //table_name different with class_name
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
 
@@ -26,11 +28,11 @@ public class Order {
 
     // cascade: khi co moi quan he phu thuoc, Order thay doi thi OrderItem thay doi
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-    //
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id") //    // Order chua delivery_id -> order_chu
+    @JoinColumn(name = "delivery_id")//    // Order chua delivery_id -> order_chu
     private Delivery delivery;
 
     private LocalDateTime orderDate;

@@ -20,7 +20,8 @@ import java.util.List;
 //abstract: de cho class khac ke thua
 public abstract class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
@@ -44,7 +45,7 @@ public abstract class Item {
     /*
      * decrease
      * */
-    public void decreaseStoch(int quantity) {
+    public void decreaseStock(int quantity) {
         int restStock = this.stockQuantity - quantity;
 
         if (restStock < 0) {
@@ -54,8 +55,6 @@ public abstract class Item {
         this.stockQuantity = restStock;
     }
 
-    /*
-     * increase
-     * */
+
 
 }
